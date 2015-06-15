@@ -20,30 +20,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A BitBucket user account.
- *
- * @author Eric Bottard
+ * @author Cyprian Śniegota
+ * @since 2.0.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BitBucketUser implements Serializable {
-
+public class BitBucketGroup implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty @Getter
-    private String username;
+    private String name;
 
-    @JsonProperty("first_name") @Getter
-    private String firstName;
+    @JsonProperty @Getter
+    private BitBucketPrivilege permission;
 
-    @JsonProperty("last_name") @Getter
-    private String lastName;
+    @JsonProperty("auto_add") @Getter
+    private boolean autoAdd;
 
-    @JsonProperty("is_team") @Getter
-    private boolean team;
+    @JsonProperty @Getter
+    private String slug;
 
-    @JsonProperty("avatar") @Getter
-    private String avatarImageUrl;
+    @JsonProperty @Getter
+    private List<BitBucketUser> members = new ArrayList<>();
+
+    @JsonProperty @Getter
+    private BitBucketUser owner;
 
 }
