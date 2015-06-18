@@ -41,6 +41,9 @@ public class BitBucketRepository implements Serializable {
     @JsonDeserialize(using = UTCDateDeserializer.class)
     private Date createdAt;
 
+    @JsonProperty @Getter
+    private String website;
+
     /** A description of the repository, as entered by its creator. */
     @JsonProperty @Getter
     private String description;
@@ -74,6 +77,45 @@ public class BitBucketRepository implements Serializable {
     /** This repository's "slug", <i>ie.</i> its technical id in BitBucket terms. */
     @JsonProperty @Getter
     private String slug;
+
+    @JsonProperty @Getter
+    private String logo;
+
+    @JsonProperty("email_mailinglist") @Getter
+    private String emailMailingList;
+
+    @JsonProperty @Getter
+    private String language;
+
+    @JsonProperty @Getter
+    private String state;
+
+    @JsonProperty("resource_uri") @Getter
+    private String resourceUri;
+
+    @JsonProperty("fork_of") @Getter
+    private BitBucketRepository forkOf;
+
+    @JsonProperty @Getter
+    private boolean mq;
+
+    @JsonProperty("mq_of") @Getter
+    private BitBucketRepository mqOf;
+
+    @JsonProperty("has_issues") @Getter
+    private boolean hasIssues;
+
+    @JsonProperty @Getter
+    private boolean fork;
+
+    @JsonProperty("email_writers") @Getter
+    private boolean emailWriters;
+
+    @JsonProperty("no_public_forks") @Getter
+    private boolean noPublicForks;
+
+    @JsonProperty("followers_count") @Getter
+    private long followersCount;
 
     /** The date when the repository was created. */
     public final Date getCreatedAt() {
