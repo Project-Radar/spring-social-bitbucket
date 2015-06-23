@@ -22,54 +22,71 @@ import lombok.Getter;
 import org.springframework.social.bitbucket.api.impl.UTCDateDeserializer;
 import org.springframework.social.bitbucket.utils.DateUtils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
- * BitBucket invitation data
+ * Describes an event.
  *
  * @author Cyprian Śniegota
  * @since 2.0.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BitBucketInvitation implements Serializable {
+public class BitBucketEvent {
 
-    @JsonProperty("sent_on")
-    @JsonDeserialize(using = UTCDateDeserializer.class)
-    private Date sentOn;
-
-    @JsonProperty("utc_sent_on")
-    @JsonDeserialize(using = UTCDateDeserializer.class)
-    private Date utcSentOn;
-
+    /**
+     * If the event is a commit, this field contains the changset node. Otherwise, this field contains null.
+     */
     @JsonProperty
     @Getter
-    private BitBucketPrivilege permission;
+    private String node;
 
-    @JsonProperty("invited_by")
+    /**
+     * If the event is a commit, this field contains the commit from the raw commit.Otherwise, this field contains null
+     */
+    @JsonProperty
     @Getter
-    private BitBucketUser invitedBy;
+    private String description;
 
+    /**
+     * Contains a repository structure if the event was on a specific repository. Otherwise, this field contains null.
+     */
     @JsonProperty
     @Getter
     private BitBucketRepository repository;
 
+    /**
+     * The time the event occurred. If the event was a commit, this is the time from the raw commit.
+     */
+    @JsonProperty("created_on")
+    @JsonDeserialize(using = UTCDateDeserializer.class)
+    private Date createdOn;
+
+    /**
+     * Contains the user profile structure.
+     */
     @JsonProperty
     @Getter
-    private String email;
+    private BitBucketUser user;
 
+    /**
+     * Universal time clock time of the event.
+     */
+    @JsonProperty("utc_created_on")
+    @JsonDeserialize(using = UTCDateDeserializer.class)
+    private Date utcCreatedOn;
+
+    /**
+     * The event type.
+     */
     @JsonProperty
     @Getter
-    private List<String> groups = new ArrayList<>();
+    private String event;
 
-    public final Date getSentOn() {
-        return DateUtils.copyNullable(sentOn);
+    public final Date getCreatedOn() {
+        return DateUtils.copyNullable(createdOn);
     }
 
-    public final Date getUtcSentOn() {
-        return DateUtils.copyNullable(utcSentOn);
+    public final Date getUtcCreatedOn() {
+        return DateUtils.copyNullable(utcCreatedOn);
     }
-
 }

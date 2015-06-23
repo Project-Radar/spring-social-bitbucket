@@ -19,24 +19,31 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-import java.io.Serializable;
-
 /**
- * BitBucket email address structure
- *
  * @author Cyprian Śniegota
  * @since 2.0.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class BitBucketEmailAddress implements Serializable {
+public class BitBucketSshKey {
 
-    @JsonProperty("active") @Getter
-    private Boolean active;
+    /**
+     * The key identifier (ID).
+     */
+    @JsonProperty
+    @Getter
+    private long pk;
 
-    @JsonProperty("email") @Getter
-    private String email;
+    /**
+     * Public key value.
+     */
+    @JsonProperty
+    @Getter
+    private String key;
 
-    @JsonProperty("primary") @Getter
-    private Boolean primary;
-
+    /**
+     * The user-visible label on the key.
+     */
+    @JsonProperty
+    @Getter
+    private String label;
 }

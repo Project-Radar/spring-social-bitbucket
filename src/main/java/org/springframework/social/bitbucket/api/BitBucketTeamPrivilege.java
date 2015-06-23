@@ -15,28 +15,12 @@
  */
 package org.springframework.social.bitbucket.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-
-import java.io.Serializable;
-
 /**
- * BitBucket email address structure
+ * Privileges available for the team
  *
  * @author Cyprian Śniegota
  * @since 2.0.0
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public final class BitBucketEmailAddress implements Serializable {
-
-    @JsonProperty("active") @Getter
-    private Boolean active;
-
-    @JsonProperty("email") @Getter
-    private String email;
-
-    @JsonProperty("primary") @Getter
-    private Boolean primary;
-
+public enum BitBucketTeamPrivilege {
+    admin, collaborator;
 }

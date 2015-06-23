@@ -16,12 +16,9 @@
     limitations under the License.
 
 -->
-<!DOCTYPE suppressions PUBLIC
-        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
-        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
-
-<suppressions>
-    <suppress
-            checks="JavadocStyleCheck|JavadocMethodCheck|JavadocTypeCheck|JavadocVariableCheck|LineLength|FinalParameters|AvoidStarImport|AvoidInlineConditionals"
-            files=".*"/>
-</suppressions>
+<FindBugsFilter>
+    <Match>
+        <!-- SE_NO_SERIALVERSIONID (SnVI): This class implements the Serializable interface, but does not define a serialVersionUID field. -->
+        <Bug pattern="SE_NO_SERIALVERSIONID"/>
+    </Match>
+</FindBugsFilter>
