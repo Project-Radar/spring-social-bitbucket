@@ -15,6 +15,9 @@
  */
 package org.springframework.social.bitbucket.api.v2;
 
+import org.springframework.social.bitbucket.api.v2.payload.BitBucketV2Commit;
+
 public interface CommitsV2Operations {
 
+    BitBucketV2Commit getCommit(String owner, String repoSlug, String node);
 }

@@ -17,12 +17,22 @@ package org.springframework.social.bitbucket.api.v2.impl;
 
 import org.springframework.social.bitbucket.api.impl.AbstractBitBucketOperations;
 import org.springframework.social.bitbucket.api.v2.CommitsV2Operations;
+import org.springframework.social.bitbucket.api.v2.payload.BitBucketV2Commit;
 import org.springframework.web.client.RestTemplate;
 
-public class CommitsV2Template extends AbstractBitBucketOperations implements CommitsV2Operations {
+public class CommitsV2Template extends AbstractBitBucketOperations
+        implements CommitsV2Operations {
 
     public CommitsV2Template(RestTemplate restTemplate, boolean authorized) {
         super(restTemplate, authorized, V2);
+    }
+
+    @Override
+    public BitBucketV2Commit getCommit(String owner, String repoSlug,
+            String node) {
+        return getRestTemplate().getForObject(
+                buildUrl("/repositories/{owner}/{repo}/commit/{node}"),
+                BitBucketV2Commit.class, owner, repoSlug, node);
     }
 
 }
