@@ -1,6 +1,10 @@
-/.project
-/.classpath
-/target
-/.idea
-/spring-social-bitbucket.iml
+.project
+.classpath
+.settings
+.gradle
+target
+.idea
 rebel.xml
+*.iml
+bin/
+build

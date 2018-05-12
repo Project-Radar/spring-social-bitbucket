@@ -63,25 +63,31 @@ public interface RepoOperations {
      * many are available totally.
      */
     BitBucketChangesets getChangesets(String user, String repoSlug,
-                                      String start, int limit);
+            String start, int limit);
 
     /**
      * Returns information about a known directory, including children
      * directories and files.
      */
     BitBucketDirectory getDirectory(String user, String repoSlug,
-                                    String revision, String path);
+            String revision, String path);
 
     /**
      * Returns information and actual contents (as a String) about a known file
      * path.
      */
     BitBucketFile getFile(String string, String string2, String string3,
-                          String string4);
+            String string4);
 
     /**
      * Creates a new repository under the account of the currently authenticated
      * user. The account automatically becomes the owner.
      */
     BitBucketRepository createRepository(RepoCreation options);
+
+    /**
+     * Get a Changeset Diff
+     */
+    List<BitBucketDiffStat> getChangeSetDiffStats(String user, String repoSlug,
+            String node);
 }

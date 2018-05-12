@@ -15,26 +15,36 @@
  */
 package org.springframework.social.bitbucket.api.impl;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.social.bitbucket.api.*;
-import org.springframework.web.client.RestTemplate;
+import static java.util.Arrays.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Arrays.asList;
+import org.springframework.social.bitbucket.api.BitBucketChangeset;
+import org.springframework.social.bitbucket.api.BitBucketChangesets;
+import org.springframework.social.bitbucket.api.BitBucketDiffStat;
+import org.springframework.social.bitbucket.api.BitBucketDirectory;
+import org.springframework.social.bitbucket.api.BitBucketFile;
+import org.springframework.social.bitbucket.api.BitBucketRepository;
+import org.springframework.social.bitbucket.api.BitBucketUser;
+import org.springframework.social.bitbucket.api.RepoCreation;
+import org.springframework.social.bitbucket.api.RepoOperations;
+import org.springframework.web.client.RestTemplate;
 
-public class RepoTemplate extends AbstractBitBucketOperations implements
-        RepoOperations {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class RepoTemplate extends AbstractBitBucketOperations
+        implements RepoOperations {
 
     public RepoTemplate(RestTemplate restTemplate, boolean authorized) {
         super(restTemplate, authorized, V1);
     }
 
     @Override
-    public final BitBucketRepository getRepository(String user, String repoSlug) {
+    public final BitBucketRepository getRepository(String user,
+            String repoSlug) {
         return getRestTemplate().getForObject(
                 buildUrl("/repositories/{user}/{slug}/"),
                 BitBucketRepository.class, user, repoSlug);
@@ -48,27 +58,31 @@ public class RepoTemplate extends AbstractBitBucketOperations implements
 
     @Override
     public final List<BitBucketRepository> search(String query) {
-        return getRestTemplate().getForObject(buildUrl("/repositories/?name={q}"),
-                SearchResultHolder.class, query).repositories;
-    }
-
-    @Override
-    public final Map<String, BitBucketChangeset> getTags(String user, String repoSlug) {
         return getRestTemplate().getForObject(
-                buildUrl("/repositories/{user}/{slug}/tags/"),
-                Tags.class, user, repoSlug);
+                buildUrl("/repositories/?name={q}"), SearchResultHolder.class,
+                query).repositories;
+    }
+
+    @Override
+    public final Map<String, BitBucketChangeset> getTags(String user,
+            String repoSlug) {
+        return getRestTemplate().getForObject(
+                buildUrl("/repositories/{user}/{slug}/tags/"), Tags.class, user,
+                repoSlug);
 
     }
 
     @Override
-    public final List<BitBucketUser> getFollowers(String user, String repoSlug) {
+    public final List<BitBucketUser> getFollowers(String user,
+            String repoSlug) {
         return getRestTemplate().getForObject(
                 buildUrl("/repositories/{user}/{slug}/followers/"),
                 FollowersHolder.class, user, repoSlug).followers;
     }
 
     @Override
-    public final BitBucketChangesets getChangesets(String user, String repoSlug) {
+    public final BitBucketChangesets getChangesets(String user,
+            String repoSlug) {
         return getRestTemplate().getForObject(
                 buildUrl("/repositories/{user}/{slug}/changesets/"),
                 BitBucketChangesets.class, user, repoSlug);
@@ -76,37 +90,40 @@ public class RepoTemplate extends AbstractBitBucketOperations implements
 
     @Override
     public final BitBucketChangesets getChangesets(String user, String repoSlug,
-                                                   String start, int limit) {
-        return getRestTemplate()
-                .getForObject(
-                        buildUrl(
-                                "/repositories/{user}/{slug}/changesets/?start={start}&limit={limit}"),
-                        BitBucketChangesets.class, user,
-                        repoSlug, start, limit);
+            String start, int limit) {
+        return getRestTemplate().getForObject(buildUrl(
+                "/repositories/{user}/{slug}/changesets/?start={start}&limit={limit}"),
+                BitBucketChangesets.class, user, repoSlug, start, limit);
     }
 
     @Override
     public final BitBucketDirectory getDirectory(String user, String repoSlug,
-                                                 String revision, String path) {
+            String revision, String path) {
         return getRestTemplate().getForObject(
                 buildUrl("/repositories/{user}/{slug}/src/{rev}/{path}/"),
-                BitBucketDirectory.class, user, repoSlug,
-                revision, path);
+                BitBucketDirectory.class, user, repoSlug, revision, path);
     }
 
     @Override
-    public final BitBucketFile getFile(String user, String repoSlug, String revision,
-                                       String path) {
+    public final BitBucketFile getFile(String user, String repoSlug,
+            String revision, String path) {
         return getRestTemplate().getForObject(
                 buildUrl("/repositories/{user}/{slug}/src/{rev}/{path}"),
-                BitBucketFile.class, user, repoSlug,
-                revision, path);
+                BitBucketFile.class, user, repoSlug, revision, path);
     }
 
     @Override
     public final BitBucketRepository createRepository(RepoCreation options) {
-        return getRestTemplate().postForObject(buildUrl("/repositories"), options,
-                BitBucketRepository.class);
+        return getRestTemplate().postForObject(buildUrl("/repositories"),
+                options, BitBucketRepository.class);
+    }
+
+    @Override
+    public List<BitBucketDiffStat> getChangeSetDiffStats(String user,
+            String repoSlug, String node) {
+        return asList(getRestTemplate().getForObject(buildUrl(
+                "/repositories/{user}/{slug}/changesets/{node}/diffstat"),
+                BitBucketDiffStat[].class, user, repoSlug, node));
     }
 
     /**

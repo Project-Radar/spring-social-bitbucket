@@ -15,11 +15,12 @@
  */
 package org.springframework.social.bitbucket.api;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 
-import java.util.List;
+import lombok.Getter;
 
 /**
  * A changeset, <i>aka</i> commit.
@@ -35,39 +36,56 @@ public class BitBucketChangeset {
     }
 
     /** The username of the {@link BitBucketUser} that made the change. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private String author;
 
     /** The name of the branch where the commit occurred. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private String branch;
 
     /** A list of affected files. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private List<FileModification> files;
 
     /** The commit message as entered by the {@link #getAuthor() author}. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private String message;
 
     /** The short node hash. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private String node;
 
     /** The parent commit(s) of this change. */
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private List<String> parents;
 
     /** The raw author identifier of this change (includes email address). */
-    @JsonProperty("raw_author") @Getter
+    @JsonProperty("raw_author")
+    @Getter
     private String rawAuthor;
 
     /** The full node hash. */
-    @JsonProperty("raw_node") @Getter
+    @JsonProperty("raw_node")
+    @Getter
     private String rawNode;
 
-    @JsonProperty @Getter
+    @JsonProperty
+    @Getter
     private long revision;
+
+    @JsonProperty
+    @Getter
+    private String timestamp;
+
+    @JsonProperty
+    @Getter
+    private String utctimestamp;
 
     @Override
     public final String toString() {
@@ -83,11 +101,13 @@ public class BitBucketChangeset {
     public static final class FileModification {
 
         /** The path of the file (or directory) affected. */
-        @JsonProperty @Getter
+        @JsonProperty
+        @Getter
         private String file;
 
         /** The kind of modification. */
-        @JsonProperty @Getter
+        @JsonProperty
+        @Getter
         private FileModificationType type;
 
     }
